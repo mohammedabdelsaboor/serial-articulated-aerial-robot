@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="bicopter">
+
+  <xacro:macro name="bicopter_clone" params="prefix">
+  
+    <link name="${prefix}bicopter_base">
+      <inertial>
+        <origin xyz="-4.24773828783045E-05 2.44249065417534E-15 0.0650518759389131" rpy="0 0 0" />
+        <mass value="0.128860772950297" />
+        <inertia ixx="0.00012692736476656" ixy="-9.40168151618541E-19" ixz="-1.11180863157818E-19" iyy="6.59919668914737E-05" iyz="4.54375669734474E-10" izz="0.00012870750039509" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry><mesh filename="package://bicopter/meshes/bicopter_base.STL" /></geometry>
+        <material name=""><color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" /></material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry><mesh filename="package://bicopter/meshes/bicopter_base.STL" /></geometry>
+      </collision>
+    </link>
+
+    <link name="${prefix}link_left_roll">
+      <inertial>
+        <origin xyz="-0.0272748947645456 3.9302374785638E-06 0.0285700251741122" rpy="0 0 0" />
+        <mass value="0.0609471296283319" />
+        <inertia ixx="1.33725269342704E-05" ixy="1.44661726214196E-09" ixz="7.60088797739573E-07" iyy="9.54834319605558E-06" iyz="4.43785594158639E-09" izz="7.35365525025628E-06" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry><mesh filename="package://bicopter/meshes/link_left_roll.STL" /></geometry>
+        <material name=""><color rgba="0.866666666666667 0.909803921568627 1 1" /></material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry><mesh filename="package://bicopter/meshes/link_left_roll.STL" /></geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}left_servo" type="revolute">
+      <origin xyz="-0.0096264 0.14234 0.073215" rpy="1.5708 1.5708 3.1416" />
+      <parent link="${prefix}bicopter_base" />
+      <child link="${prefix}link_left_roll" />
+      <axis xyz="-1 0 0" />
+      <limit lower="0" upper="0" effort="0" velocity="0" />
+    </joint>
+
+    <link name="${prefix}link_left_spin">
+      <inertial>
+        <origin xyz="4.42911324224221E-07 3.78923949662102E-07 0.0126500073169104" rpy="0 0 0" />
+        <mass value="0.0121060010996538" />
+        <inertia ixx="9.11805681193253E-06" ixy="-1.01100046054506E-05" ixz="1.93392221188337E-12" iyy="1.21729017067306E-05" iyz="4.75592202310525E-12" izz="2.09982292324659E-05" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry><mesh filename="package://bicopter/meshes/link_left_spin.STL" /></geometry>
+        <material name=""><color rgba="1 1 1 1" /></material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry><mesh filename="package://bicopter/meshes/link_left_spin.STL" /></geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}left_prop" type="continuous">
+      <origin xyz="-0.0517 0 0.03096" rpy="1.5708 0 -1.5708" />
+      <parent link="${prefix}link_left_roll" />
+      <child link="${prefix}link_left_spin" />
+      <axis xyz="0 0 1" />
+    </joint>
+
+    <link name="${prefix}link_right_roll">
+      <inertial>
+        <origin xyz="-3.94597764220503E-06 0.027274894764549 0.0285667036669385" rpy="0 0 0" />
+        <mass value="0.0609471296283323" />
+        <inertia ixx="9.54834319605567E-06" ixy="1.45194849629446E-09" ixz="4.43785594162608E-09" iyy="1.33725269342705E-05" iyz="-7.5851728680987E-07" izz="7.35365525025634E-06" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry><mesh filename="package://bicopter/meshes/link_right_roll.STL" /></geometry>
+        <material name=""><color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" /></material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry><mesh filename="package://bicopter/meshes/link_right_roll.STL" /></geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}right_servo" type="revolute">
+      <origin xyz="-0.0096264 -0.14234 0.072785" rpy="1.5708 0 0" />
+      <parent link="${prefix}bicopter_base" />
+      <child link="${prefix}link_right_roll" />
+      <axis xyz="-1 0 0" />
+      <limit lower="0" upper="0" effort="0" velocity="0" />
+    </joint>
+
+    <link name="${prefix}link_right_spin">
+      <inertial>
+        <origin xyz="4.46733722393039E-07 3.754689014146E-07 0.0126500073421574" rpy="0 0 0" />
+        <mass value="0.0121060010605156" />
+        <inertia ixx="8.95347420402359E-06" ixy="-1.00837668009862E-05" ixz="1.9695131603757E-12" iyy="1.23374836772075E-05" iyz="4.72490664678165E-12" izz="2.09982285948052E-05" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry><mesh filename="package://bicopter/meshes/link_right_spin.STL" /></geometry>
+        <material name=""><color rgba="1 1 1 1" /></material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry><mesh filename="package://bicopter/meshes/link_right_spin.STL" /></geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}right_prop" type="continuous">
+      <origin xyz="0 0.0517 0.03096" rpy="-1.5708 0 0" />
+      <parent link="${prefix}link_right_roll" />
+      <child link="${prefix}link_right_spin" />
+      <axis xyz="0 0 1" />
+    </joint>
+
+  </xacro:macro>
+</robot>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <material name="light_blue">
+    <color rgba="0.866666666666667 0.909803921568627 1 1" />
+  </material>
+
+  <material name="slate">
+    <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+  </material>
+
+  <material name="tan">
+    <color rgba="0.647058823529412 0.619607843137255 0.588235294117647 1" />
+  </material>
+
+</robot>

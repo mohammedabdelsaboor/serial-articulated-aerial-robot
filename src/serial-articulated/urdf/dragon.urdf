@@ -1,0 +1,617 @@
+<?xml version="1.0"?>
+<robot name="dragon">
+  <material name="light_blue">
+    <color rgba="0.866666666666667 0.909803921568627 1 1" />
+  </material>
+  <material name="slate">
+    <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+  </material>
+  <material name="tan">
+    <color rgba="0.647058823529412 0.619607843137255 0.588235294117647 1" />
+  </material>
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0.0710942808422459 0.758997540044407 -0.000334537774211377" rpy="0 0 0" />
+      <mass value="0.132323882569202" />
+      <inertia ixx="2.16673690412181E-05" ixy="0.00010933271168009" ixz="-5.78092349738168E-06" iyy="0.0046658747683856" iyz="1.36017642649256E-07" izz="0.00466844003360906" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/base_link.STL" />
+      </geometry>
+      <material name="light_blue">
+        <color rgba="0.866666666666667 0.909803921568627 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="joint1_pitch">
+    <inertial>
+      <origin xyz="0.026482580537379 0.0067099200307279 0.0674023643088623" rpy="0 0 0" />
+      <mass value="0.323307121794733" />
+      <inertia ixx="0.00019094018776057" ixy="1.55193420765089E-06" ixz="1.25235179725188E-05" iyy="0.00028127097635108" iyz="-2.96716526834112E-07" izz="0.000164349972305016" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/joint1_pitch.STL" />
+      </geometry>
+      <material name="tan">
+        <color rgba="0.647058823529412 0.619607843137255 0.588235294117647 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/joint1_pitch.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint1_dummy" type="revolute">
+    <origin xyz="0.41105 0.751 -0.042412" rpy="0 0.0012441 -3.1416" />
+    <parent link="base_link" />
+    <child link="joint1_pitch" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.5708" upper="1.5708" effort="100" velocity="1.0" />
+    <dynamics damping="0.1" friction="0.0" />
+  </joint>
+  <link name="joint1_yaw">
+    <inertial>
+      <origin xyz="0.137727139557225 -7.88593466734616E-05 0.063205148193877" rpy="0 0 0" />
+      <mass value="0.388844913230588" />
+      <inertia ixx="0.00016784589299931" ixy="-1.18907200392012E-08" ixz="1.25270353468353E-05" iyy="0.00488304515467424" iyz="1.12865436086612E-07" izz="0.00479065192326079" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/joint1_yaw.STL" />
+      </geometry>
+      <material name="light_blue">
+        <color rgba="0.866666666666667 0.909803921568627 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/joint1_yaw.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="link2_main_tube" type="fixed">
+    <origin xyz="-0.0425 0.071 0.0425" rpy="1.5696 0 1.5708" />
+    <parent link="joint1_pitch" />
+    <child link="joint1_yaw" />
+  </joint>
+  <link name="Joint2_pitch">
+    <inertial>
+      <origin xyz="-0.0264899163309105 0.00741686795025043 -0.067393189358937" rpy="0 0 0" />
+      <mass value="0.323307121796142" />
+      <inertia ixx="0.000190903585300382" ixy="-1.92536747920891E-08" ixz="1.25270186437505E-05" iyy="0.000281307392689055" iyz="1.47557164284561E-07" izz="0.000164350158432045" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/Joint2_pitch.STL" />
+      </geometry>
+      <material name="tan">
+        <color rgba="0.647058823529412 0.619607843137255 0.588235294117647 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/Joint2_pitch.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint2_dummy" type="revolute">
+    <origin xyz="0.68 -0.042553 0.042447" rpy="1.5708 0 0" />
+    <parent link="joint1_yaw" />
+    <child link="Joint2_pitch" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.5708" upper="1.5708" effort="100" velocity="1.0" />
+    <dynamics damping="0.1" friction="0.0" />
+  </joint>
+  <link name="joint2_yaw">
+    <inertial>
+      <origin xyz="0.13772713955714 -2.27662269981965E-07 0.0632051973888087" rpy="0 0 0" />
+      <mass value="0.388844913230465" />
+      <inertia ixx="0.000167845892999256" ixy="3.69379698468947E-09" ixz="1.25270404456003E-05" iyy="0.00488304529250104" iyz="-2.07846394214535E-09" izz="0.00479065178543387" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/joint2_yaw.STL" />
+      </geometry>
+      <material name="light_blue">
+        <color rgba="0.866666666666667 0.909803921568627 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/joint2_yaw.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="link3_main_tube" type="fixed">
+    <origin xyz="0.0425 0.071053 -0.042412" rpy="-1.5708 0 1.5708" />
+    <parent link="Joint2_pitch" />
+    <child link="joint2_yaw" />
+  </joint>
+  <link name="joint3_pitch">
+    <inertial>
+      <origin xyz="0.0264899163310516 0.00733302037051284 0.0674023643089112" rpy="0 0 0" />
+      <mass value="0.323307121794285" />
+      <inertia ixx="0.000190903585297312" ixy="3.66917552913286E-09" ixz="1.25270329025918E-05" iyy="0.00028130757881418" iyz="-2.05384337523967E-09" izz="0.000164349972304898" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/joint3_pitch.STL" />
+      </geometry>
+      <material name="tan">
+        <color rgba="0.647058823529412 0.619607843137255 0.588235294117647 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/joint3_pitch.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint3_dummy" type="revolute">
+    <origin xyz="0.68 -0.0425 0.0425" rpy="1.5708 0 3.1416" />
+    <parent link="joint2_yaw" />
+    <child link="joint3_pitch" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.5708" upper="1.5708" effort="100" velocity="1.0" />
+    <dynamics damping="0.1" friction="0.0" />
+  </joint>
+  <link name="joint3_yaw">
+    <inertial>
+      <origin xyz="0.13772713955714 -2.27662270044259E-07 0.0632051973888075" rpy="0 0 0" />
+      <mass value="0.388844913230465" />
+      <inertia ixx="0.000167845892999256" ixy="3.69379698455331E-09" ixz="1.25270404456005E-05" iyy="0.00488304529250104" iyz="-2.07846394215955E-09" izz="0.00479065178543386" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/joint3_yaw.STL" />
+      </geometry>
+      <material name="light_blue">
+        <color rgba="0.866666666666667 0.909803921568627 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/joint3_yaw.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="link4_main_tube" type="fixed">
+    <origin xyz="-0.0425 0.071 0.0425" rpy="1.5708 0 1.5708" />
+    <parent link="joint3_pitch" />
+    <child link="joint3_yaw" />
+  </joint>
+  <link name="link1_arm_roll">
+    <inertial>
+      <origin xyz="0.391146951699728 0.562691269918003 -1.40979996564852" rpy="0 0 0" />
+      <mass value="0.236214339843921" />
+      <inertia ixx="0.000102401751755143" ixy="-4.32094643119988E-06" ixz="-2.34507039099166E-07" iyy="9.86396832914087E-05" iyz="-3.46801744834344E-07" izz="7.99788746652359E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link1_arm_roll.STL" />
+      </geometry>
+      <material name="slate">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link1_arm_roll.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="link1_right_spin">
+    <inertial>
+      <origin xyz="6.93158392350846E-07 6.29945029195778E-08 0.00430821663494839" rpy="0 0 0" />
+      <mass value="0.0119145513741783" />
+      <inertia ixx="4.76119684476372E-07" ixy="-1.11645184011423E-06" ixz="-5.15182079685355E-12" iyy="2.0399736262995E-05" iyz="-2.98523010228511E-12" izz="2.05871235175461E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link1_right_spin.STL" />
+      </geometry>
+      <material name="slate">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link1_right_spin.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="link1_right_servo" type="revolute">
+    <origin xyz="0.44002 0.52942 -1.5835" rpy="0 0 0" />
+    <parent link="link1_arm_roll" />
+    <child link="link1_right_tilt" />
+    <axis xyz="0.98248 0 -0.18627" />
+    <limit lower="-1.5708" upper="1.5708" effort="1.0" velocity="1.0" />
+  </joint>
+  <link name="link1_right_tilt">
+    <inertial><mass value="0.001"/><inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/></inertial>
+  </link>
+  <joint name="link1_right_prop" type="continuous">
+    <origin xyz="0 0 0" rpy="-1.5708 0 2.1645" />
+    <parent link="link1_right_tilt" />
+    <child link="link1_right_spin" />
+    <axis xyz="0 0 1" />
+  </joint>
+  <link name="link1_left_spin">
+    <inertial>
+      <origin xyz="-6.65762375562373E-07 7.51971221471526E-08 0.00430822010087943" rpy="0 0 0" />
+      <mass value="0.0119145619562564" />
+      <inertia ixx="8.92563367215736E-07" ixy="3.06123858172512E-06" ixz="5.66717622274926E-12" iyy="1.99835060436476E-05" iyz="1.6706195567006E-12" izz="2.05873388306E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link1_left_spin.STL" />
+      </geometry>
+      <material name="slate">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link1_left_spin.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="link1_left_servo" type="revolute">
+    <origin xyz="0.44605 0.53925 -1.237" rpy="0 0 0" />
+    <parent link="link1_arm_roll" />
+    <child link="link1_left_tilt" />
+    <axis xyz="0.99879 0 0" />
+    <limit lower="-1.5708" upper="1.5708" effort="1.0" velocity="1.0" />
+  </joint>
+  <link name="link1_left_tilt">
+    <inertial><mass value="0.001"/><inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/></inertial>
+  </link>
+  <joint name="link1_left_prop" type="continuous">
+    <origin xyz="0 0 0" rpy="-1.5708 0 2.1645" />
+    <parent link="link1_left_tilt" />
+    <child link="link1_left_spin" />
+    <axis xyz="0 0 1" />
+  </joint>
+  <link name="link2_arm_roll">
+    <inertial>
+      <origin xyz="-0.457033754153099 -0.506678256135787 0.0787627278506737" rpy="0 0 0" />
+      <mass value="0.235801131531695" />
+      <inertia ixx="9.98424389102429E-05" ixy="-2.37725729128645E-06" ixz="7.62293456136859E-06" iyy="9.74214633411073E-05" iyz="-4.75854516501822E-06" izz="8.37458423867799E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link2_arm_roll.STL" />
+      </geometry>
+      <material name="slate">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link2_arm_roll.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="link2_right_spin">
+    <inertial>
+      <origin xyz="-5.55342390073932E-07 1.53793112911416E-07 0.00430821134206971" rpy="0 0 0" />
+      <mass value="0.0119145275478498" />
+      <inertia ixx="2.47889262372374E-06" ixy="6.09419636431981E-06" ixz="-2.69168596319441E-13" iyy="1.83970876472519E-05" iyz="-9.83402093599899E-13" izz="2.0587245953127E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link2_right_spin.STL" />
+      </geometry>
+      <material name="slate">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link2_right_spin.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="link2_right_servo" type="revolute">
+    <origin xyz="-0.43941 -0.50439 -0.10369" rpy="0 0 0" />
+    <parent link="link2_arm_roll" />
+    <child link="link2_right_tilt" />
+    <axis xyz="-1 0 0" />
+    <limit lower="-1.5708" upper="1.5708" effort="1.0" velocity="1.0" />
+  </joint>
+  <link name="link2_right_tilt">
+    <inertial><mass value="0.001"/><inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/></inertial>
+  </link>
+  <joint name="link2_right_prop" type="continuous">
+    <origin xyz="0 0 0" rpy="0.050924 -1.1733 2.3903" />
+    <parent link="link2_right_tilt" />
+    <child link="link2_right_spin" />
+    <axis xyz="0 0 1" />
+  </joint>
+  <link name="link2_left_spin">
+    <inertial>
+      <origin xyz="1.75439487964946E-07 -5.45956629460775E-07 0.00430822382739904" rpy="0 0 0" />
+      <mass value="0.0119146770370482" />
+      <inertia ixx="1.78979551885038E-05" ixy="6.69611227121299E-06" ixz="-2.93821431079924E-13" iyy="2.97828513231755E-06" iyz="7.1775198346959E-12" izz="2.05875014736327E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link2_left_spin.STL" />
+      </geometry>
+      <material name="slate">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link2_left_spin.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="link2_left_servo" type="revolute">
+    <origin xyz="-0.56141 -0.4453 0.21589" rpy="0 0 0" />
+    <parent link="link2_arm_roll" />
+    <child link="link2_left_tilt" />
+    <axis xyz="-1 0 0" />
+    <limit lower="-1.5708" upper="1.5708" effort="1.0" velocity="1.0" />
+  </joint>
+  <link name="link2_left_tilt">
+    <inertial><mass value="0.001"/><inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/></inertial>
+  </link>
+  <joint name="link2_left_prop" type="continuous">
+    <origin xyz="0 0 0" rpy="-0.18725 1.1719 -0.59366" />
+    <parent link="link2_left_tilt" />
+    <child link="link2_left_spin" />
+    <axis xyz="0 0 1" />
+  </joint>
+  <link name="link3_arm_roll">
+    <inertial>
+      <origin xyz="0.00245797536937548 -0.00989323563801642 0.0999989657255698" rpy="0 0 0" />
+      <mass value="0.235801120277161" />
+      <inertia ixx="9.94724476697892E-05" ixy="-4.55392504906195E-06" ixz="5.45562265200606E-08" iyy="0.000101574487702929" iyz="4.28403689738644E-08" izz="7.99628012403023E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link3_arm_roll.STL" />
+      </geometry>
+      <material name="slate">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link3_arm_roll.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="link3_right_spin">
+    <inertial>
+      <origin xyz="-2.56176795110363E-07 -5.66285078277412E-07 0.00430826962372625" rpy="0 0 0" />
+      <mass value="0.0119146070710253" />
+      <inertia ixx="1.6501820132458E-05" ixy="-7.98254019416689E-06" ixz="3.540362400357E-12" iyy="4.37446785622458E-06" iyz="5.6472291988432E-13" izz="2.05875539919694E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link3_right_spin.STL" />
+      </geometry>
+      <material name="slate">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link3_right_spin.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="link3_right_servo" type="revolute">
+    <origin xyz="0.038452 -0.055497 -0.0733" rpy="0 0 0" />
+    <parent link="link3_arm_roll" />
+    <child link="link3_right_tilt" />
+    <axis xyz="-1 0 0" />
+    <limit lower="-1.5708" upper="1.5708" effort="1.0" velocity="1.0" />
+  </joint>
+  <link name="link3_right_tilt">
+    <inertial><mass value="0.001"/><inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/></inertial>
+  </link>
+  <joint name="link3_right_prop" type="continuous">
+    <origin xyz="0 0 0" rpy="2.3171 -1.5708 0" />
+    <parent link="link3_right_tilt" />
+    <child link="link3_right_spin" />
+    <axis xyz="0 0 1" />
+  </joint>
+  <link name="link3_left_spin">
+    <inertial>
+      <origin xyz="2.73046578846969E-07 5.73867699905223E-07 0.00430821174764126" rpy="0 0 0" />
+      <mass value="0.0119147088004385" />
+      <inertia ixx="1.62639833749535E-05" ixy="-8.15846604185685E-06" ixz="-2.92179916268212E-12" iyy="4.61305601836069E-06" iyz="1.74700164483154E-14" izz="2.05883046094045E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link3_left_spin.STL" />
+      </geometry>
+      <material name="slate">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link3_left_spin.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="link3_left_servo" type="revolute">
+    <origin xyz="0.033247 -0.060392 0.2733" rpy="0 0 0" />
+    <parent link="link3_arm_roll" />
+    <child link="link3_left_tilt" />
+    <axis xyz="-1 0 0" />
+    <limit lower="-1.5708" upper="1.5708" effort="1.0" velocity="1.0" />
+  </joint>
+  <link name="link3_left_tilt">
+    <inertial><mass value="0.001"/><inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/></inertial>
+  </link>
+  <joint name="link3_left_prop" type="continuous">
+    <origin xyz="0 0 0" rpy="2.214 1.5708 0" />
+    <parent link="link3_left_tilt" />
+    <child link="link3_left_spin" />
+    <axis xyz="0 0 1" />
+  </joint>
+  <link name="link4_arm_roll">
+    <inertial>
+      <origin xyz="0.00556718817734494 -0.0091708657223088 0.0999982875719218" rpy="0 0 0" />
+      <mass value="0.235801068206263" />
+      <inertia ixx="0.000102541660439651" ixy="-4.25649507957864E-06" ixz="-5.21745798693059E-09" iyy="9.85041038479802E-05" iyz="-1.47127323832769E-08" izz="7.99639523131123E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link4_arm_roll.STL" />
+      </geometry>
+      <material name="slate">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link4_arm_roll.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link name="link4_right_spin">
+    <inertial>
+      <origin xyz="-5.12063616842084E-07 2.54679352995613E-07 0.00430827164853591" rpy="0 0 0" />
+      <mass value="0.0119145517108038" />
+      <inertia ixx="4.79245126533979E-06" ixy="8.28341040691042E-06" ixz="2.94893638638157E-12" iyy="1.60837613696755E-05" iyz="-3.632633838718E-12" izz="2.0587479692032E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link4_right_spin.STL" />
+      </geometry>
+      <material name="slate">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link4_right_spin.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="link4_right_servo" type="revolute">
+    <origin xyz="0.053669 -0.043501 0.2733" rpy="0 0 0" />
+    <parent link="link4_arm_roll" />
+    <child link="link4_right_tilt" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.5708" upper="1.5708" effort="1.0" velocity="1.0" />
+  </joint>
+  <link name="link4_right_tilt">
+    <inertial><mass value="0.001"/><inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/></inertial>
+  </link>
+  <joint name="link4_right_prop" type="continuous">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="link4_right_tilt" />
+    <child link="link4_right_spin" />
+    <axis xyz="0 0 1" />
+  </joint>
+  <link name="link4_left_spin">
+    <inertial>
+      <origin xyz="5.09363395795326E-07 -2.54296163793022E-07 0.0043082663718139" rpy="0 0 0" />
+      <mass value="0.0119145296235532" />
+      <inertia ixx="4.79862141259182E-06" ixy="8.28756786099946E-06" ixz="-3.01248004075787E-12" iyy="1.60774222635075E-05" iyz="3.66973082984215E-12" izz="2.05873107453045E-05" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 1.5708" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link4_left_spin.STL" />
+      </geometry>
+      <material name="slate">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/link4_left_spin.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="link4_left_servo" type="revolute">
+    <origin xyz="0.052158 -0.045114 -0.0733" rpy="0 0 0" />
+    <parent link="link4_arm_roll" />
+    <child link="link4_left_tilt" />
+    <axis xyz="0.98525 0 -0.16991" />
+    <limit lower="-1.5708" upper="1.5708" effort="1.0" velocity="1.0" />
+  </joint>
+  <link name="link4_left_tilt">
+    <inertial><mass value="0.001"/><inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/></inertial>
+  </link>
+  <joint name="link4_left_prop" type="continuous">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="link4_left_tilt" />
+    <child link="link4_left_spin" />
+    <axis xyz="0 0 1" />
+  </joint>
+  <joint name="link1_cross_arm" type="fixed">
+    <origin xyz="0.751 -0.651 0.045" rpy="-1.5708 -0.97713 3.1416" />
+    <parent link="base_link" />
+    <child link="link1_arm_roll" />
+  </joint>
+  <joint name="link2_cross_arm" type="fixed">
+    <origin xyz="1.02 -0.0034041 -0.06711" rpy="0.22794 0.3231 -0.93983" />
+    <parent link="joint1_yaw" />
+    <child link="link2_arm_roll" />
+  </joint>
+  <joint name="link3_cross_arm" type="fixed">
+    <origin xyz="0.34 0.045 0.1425" rpy="3.1416 0 0.5756" />
+    <parent link="joint2_yaw" />
+    <child link="link3_arm_roll" />
+  </joint>
+  <joint name="link4_cross_arm" type="fixed">
+    <origin xyz="0.34 0.045 -0.0575" rpy="0 0 2.1645" />
+    <parent link="joint3_yaw" />
+    <child link="link4_arm_roll" />
+  </joint>
+</robot>

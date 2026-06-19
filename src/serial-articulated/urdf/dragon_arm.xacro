@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!--
+    Dragon bicopter arm module — mirrors the bicopter.xacro structure:
+      arm_roll (base) -[servo]-> *_tilt (roll link) -[prop]-> *_spin
+
+    Inertial values are passed as individual string params so the URDF
+    output is valid (block-param approach inserts wrapper tags, breaking URDF).
+    Param abbreviations:  arm_* = arm_roll,  rs_* = right_spin,  ls_* = left_spin
+  -->
+  <xacro:macro name="dragon_arm" params="
+      prefix
+      arm_xyz   arm_mass
+      arm_ixx   arm_ixy   arm_ixz   arm_iyy   arm_iyz   arm_izz
+      rs_xyz    rs_mass
+      rs_ixx    rs_ixy    rs_ixz    rs_iyy    rs_iyz    rs_izz
+      ls_xyz    ls_mass
+      ls_ixx    ls_ixy    ls_ixz    ls_iyy    ls_iyz    ls_izz
+      right_servo_xyz  right_servo_axis
+      left_servo_xyz   left_servo_axis
+      right_prop_rpy
+      left_prop_rpy
+      left_spin_visual_rpy:='0 0 0'">
+
+    <!-- ── Arm base (bicopter_base equivalent) ──────────────────────── -->
+    <link name="${prefix}arm_roll">
+      <inertial>
+        <origin xyz="${arm_xyz}" rpy="0 0 0"/>
+        <mass value="${arm_mass}"/>
+        <inertia ixx="${arm_ixx}" ixy="${arm_ixy}" ixz="${arm_ixz}"
+                 iyy="${arm_iyy}" iyz="${arm_iyz}" izz="${arm_izz}"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry><mesh filename="package://serial-articulated/meshes/${prefix}arm_roll.STL"/></geometry>
+        <material name="slate"><color rgba="0.792 0.820 0.933 1"/></material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry><mesh filename="package://serial-articulated/meshes/${prefix}arm_roll.STL"/></geometry>
+      </collision>
+    </link>
+
+    <!-- ── Right side ────────────────────────────────────────────────── -->
+
+    <!-- Roll / tilt link (link_right_roll equivalent) -->
+    <link name="${prefix}right_tilt">
+      <inertial>
+        <mass value="0.001"/>
+        <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
+      </inertial>
+    </link>
+
+    <!-- Servo joint (right_servo equivalent) -->
+    <joint name="${prefix}right_servo" type="revolute">
+      <origin xyz="${right_servo_xyz}" rpy="0 0 0"/>
+      <parent link="${prefix}arm_roll"/>
+      <child link="${prefix}right_tilt"/>
+      <axis xyz="${right_servo_axis}"/>
+      <limit lower="-1.5708" upper="1.5708" effort="1.0" velocity="1.0"/>
+    </joint>
+
+    <!-- Propeller spin link (link_right_spin equivalent) -->
+    <link name="${prefix}right_spin">
+      <inertial>
+        <origin xyz="${rs_xyz}" rpy="0 0 0"/>
+        <mass value="${rs_mass}"/>
+        <inertia ixx="${rs_ixx}" ixy="${rs_ixy}" ixz="${rs_ixz}"
+                 iyy="${rs_iyy}" iyz="${rs_iyz}" izz="${rs_izz}"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry><mesh filename="package://serial-articulated/meshes/${prefix}right_spin.STL"/></geometry>
+        <material name="slate"><color rgba="0.792 0.820 0.933 1"/></material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry><mesh filename="package://serial-articulated/meshes/${prefix}right_spin.STL"/></geometry>
+      </collision>
+    </link>
+
+    <!-- Prop joint — axis 0 0 1 like bicopter -->
+    <joint name="${prefix}right_prop" type="continuous">
+      <origin xyz="0 0 0" rpy="${right_prop_rpy}"/>
+      <parent link="${prefix}right_tilt"/>
+      <child link="${prefix}right_spin"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+    <!-- ── Left side ─────────────────────────────────────────────────── -->
+
+    <!-- Roll / tilt link (link_left_roll equivalent) -->
+    <link name="${prefix}left_tilt">
+      <inertial>
+        <mass value="0.001"/>
+        <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
+      </inertial>
+    </link>
+
+    <!-- Servo joint (left_servo equivalent) -->
+    <joint name="${prefix}left_servo" type="revolute">
+      <origin xyz="${left_servo_xyz}" rpy="0 0 0"/>
+      <parent link="${prefix}arm_roll"/>
+      <child link="${prefix}left_tilt"/>
+      <axis xyz="${left_servo_axis}"/>
+      <limit lower="-1.5708" upper="1.5708" effort="1.0" velocity="1.0"/>
+    </joint>
+
+    <!-- Propeller spin link (link_left_spin equivalent) -->
+    <link name="${prefix}left_spin">
+      <inertial>
+        <origin xyz="${ls_xyz}" rpy="0 0 0"/>
+        <mass value="${ls_mass}"/>
+        <inertia ixx="${ls_ixx}" ixy="${ls_ixy}" ixz="${ls_ixz}"
+                 iyy="${ls_iyy}" iyz="${ls_iyz}" izz="${ls_izz}"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="${left_spin_visual_rpy}"/>
+        <geometry><mesh filename="package://serial-articulated/meshes/${prefix}left_spin.STL"/></geometry>
+        <material name="slate"><color rgba="0.792 0.820 0.933 1"/></material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry><mesh filename="package://serial-articulated/meshes/${prefix}left_spin.STL"/></geometry>
+      </collision>
+    </link>
+
+    <!-- Prop joint — axis 0 0 1 like bicopter -->
+    <joint name="${prefix}left_prop" type="continuous">
+      <origin xyz="0 0 0" rpy="${left_prop_rpy}"/>
+      <parent link="${prefix}left_tilt"/>
+      <child link="${prefix}left_spin"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+  </xacro:macro>
+</robot>

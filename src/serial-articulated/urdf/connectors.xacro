@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<robot name="connectors" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ===== BASE LINK ===== -->
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0.0710942808422459 0.758997540044407 -0.000334537774211377" rpy="0 0 0" />
+      <mass value="0.132323882569202" />
+      <inertia ixx="2.16673690412181E-05" ixy="0.00010933271168009" ixz="-5.78092349738168E-06"
+               iyy="0.0046658747683856" iyz="1.36017642649256E-07" izz="0.00466844003360906" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/base_link.STL" />
+      </geometry>
+      <material name="light_blue">
+        <color rgba="0.866666666666667 0.909803921568627 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ===== CONNECTOR 1→2 ===== -->
+  <link name="joint1_pitch">
+    <inertial>
+      <origin xyz="0.026482580537379 0.0067099200307279 0.0674023643088623" rpy="0 0 0" />
+      <mass value="0.323307121794733" />
+      <inertia ixx="0.00019094018776057" ixy="1.55193420765089E-06" ixz="1.25235179725188E-05"
+               iyy="0.00028127097635108" iyz="-2.96716526834112E-07" izz="0.000164349972305016" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/joint1_pitch.STL" />
+      </geometry>
+      <material name="tan">
+        <color rgba="0.647058823529412 0.619607843137255 0.588235294117647 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/joint1_pitch.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint1_dummy" type="revolute">
+    <origin xyz="0.41105 0.751 -0.042412" rpy="0 0.0012441 -3.1416" />
+    <parent link="base_link" />
+    <child link="joint1_pitch" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.5708" upper="1.5708" effort="100" velocity="1.0" />
+    <dynamics damping="0.1" friction="0.0" />
+  </joint>
+
+  <link name="joint1_yaw">
+    <inertial>
+      <origin xyz="0.137727139557225 -7.88593466734616E-05 0.063205148193877" rpy="0 0 0" />
+      <mass value="0.388844913230588" />
+      <inertia ixx="0.00016784589299931" ixy="-1.18907200392012E-08" ixz="1.25270353468353E-05"
+               iyy="0.00488304515467424" iyz="1.12865436086612E-07" izz="0.00479065192326079" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/joint1_yaw.STL" />
+      </geometry>
+      <material name="light_blue">
+        <color rgba="0.866666666666667 0.909803921568627 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/joint1_yaw.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="link2_main_tube" type="fixed">
+    <origin xyz="-0.0425 0.071 0.0425" rpy="1.5696 0 1.5708" />
+    <parent link="joint1_pitch" />
+    <child link="joint1_yaw" />
+  </joint>
+
+  <!-- ===== CONNECTOR 2→3 ===== -->
+  <link name="Joint2_pitch">
+    <inertial>
+      <origin xyz="-0.0264899163309105 0.00741686795025043 -0.067393189358937" rpy="0 0 0" />
+      <mass value="0.323307121796142" />
+      <inertia ixx="0.000190903585300382" ixy="-1.92536747920891E-08" ixz="1.25270186437505E-05"
+               iyy="0.000281307392689055" iyz="1.47557164284561E-07" izz="0.000164350158432045" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/Joint2_pitch.STL" />
+      </geometry>
+      <material name="tan">
+        <color rgba="0.647058823529412 0.619607843137255 0.588235294117647 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/Joint2_pitch.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint2_dummy" type="revolute">
+    <origin xyz="0.68 -0.042553 0.042447" rpy="1.5708 0 0" />
+    <parent link="joint1_yaw" />
+    <child link="Joint2_pitch" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.5708" upper="1.5708" effort="100" velocity="1.0" />
+    <dynamics damping="0.1" friction="0.0" />
+  </joint>
+
+  <link name="joint2_yaw">
+    <inertial>
+      <origin xyz="0.13772713955714 -2.27662269981965E-07 0.0632051973888087" rpy="0 0 0" />
+      <mass value="0.388844913230465" />
+      <inertia ixx="0.000167845892999256" ixy="3.69379698468947E-09" ixz="1.25270404456003E-05"
+               iyy="0.00488304529250104" iyz="-2.07846394214535E-09" izz="0.00479065178543387" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/joint2_yaw.STL" />
+      </geometry>
+      <material name="light_blue">
+        <color rgba="0.866666666666667 0.909803921568627 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/joint2_yaw.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="link3_main_tube" type="fixed">
+    <origin xyz="0.0425 0.071053 -0.042412" rpy="-1.5708 0 1.5708" />
+    <parent link="Joint2_pitch" />
+    <child link="joint2_yaw" />
+  </joint>
+
+  <!-- ===== CONNECTOR 3→4 ===== -->
+  <link name="joint3_pitch">
+    <inertial>
+      <origin xyz="0.0264899163310516 0.00733302037051284 0.0674023643089112" rpy="0 0 0" />
+      <mass value="0.323307121794285" />
+      <inertia ixx="0.000190903585297312" ixy="3.66917552913286E-09" ixz="1.25270329025918E-05"
+               iyy="0.00028130757881418" iyz="-2.05384337523967E-09" izz="0.000164349972304898" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/joint3_pitch.STL" />
+      </geometry>
+      <material name="tan">
+        <color rgba="0.647058823529412 0.619607843137255 0.588235294117647 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/joint3_pitch.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="Joint3_dummy" type="revolute">
+    <origin xyz="0.68 -0.0425 0.0425" rpy="1.5708 0 3.1416" />
+    <parent link="joint2_yaw" />
+    <child link="joint3_pitch" />
+    <axis xyz="0 0 1" />
+    <limit lower="-1.5708" upper="1.5708" effort="100" velocity="1.0" />
+    <dynamics damping="0.1" friction="0.0" />
+  </joint>
+
+  <link name="joint3_yaw">
+    <inertial>
+      <origin xyz="0.13772713955714 -2.27662270044259E-07 0.0632051973888075" rpy="0 0 0" />
+      <mass value="0.388844913230465" />
+      <inertia ixx="0.000167845892999256" ixy="3.69379698455331E-09" ixz="1.25270404456005E-05"
+               iyy="0.00488304529250104" iyz="-2.07846394215955E-09" izz="0.00479065178543386" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/joint3_yaw.STL" />
+      </geometry>
+      <material name="light_blue">
+        <color rgba="0.866666666666667 0.909803921568627 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://serial-articulated/meshes/joint3_yaw.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="link4_main_tube" type="fixed">
+    <origin xyz="-0.0425 0.071 0.0425" rpy="1.5708 0 1.5708" />
+    <parent link="joint3_pitch" />
+    <child link="joint3_yaw" />
+  </joint>
+
+</robot>
